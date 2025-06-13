@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jogo: Mundo das Crianças</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fce4ec;
+      color: #333;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 10px;
+      background: #fff0f5;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #d81b60;
+    }
+    button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+      background-color: #f06292;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #ec407a;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎲 Mundo das Crianças 👶</h1>
+  <div id="quiz">
+    <p id="question"></p>
+    <div id="options"></div>
+    <p id="score" class="hidden"></p>
+    <button onclick="nextQuestion()">Próxima</button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Qual desses é um desenho animado famoso?",
+        options: ["Jornal Nacional", "Bob Esponja", "MasterChef", "Fantástico"],
+        answer: 1
+      },
+      {
+        question: "O que as crianças costumam fazer no recreio?",
+        options: ["Dormir", "Lavar roupa", "Brincar", "Trabalhar"],
+        answer: 2
+      },
+      {
+        question: "Qual desses alimentos é mais saudável para uma criança?",
+        options: ["Bala", "Chocolate", "Fruta", "Refrigerante"],
+        answer: 2
+      },
+      {
+        question: "O que usamos para desenhar?",
+        options: ["Colher", "Martelo", "Lápis de cor", "Chave"],
+        answer: 2
+      },
+      {
+        question: "Quantos dias tem uma semana?",
+        options: ["5", "6", "7", "10"],
+        answer: 2
+      },
+      {
+        question: "Qual é o nome da fada que troca dentes por moedas?",
+        options: ["Fada dos Sonhos", "Fada dos Dentes", "Fada da Alegria", "Fada da Escola"],
+        answer: 1
+      },
+      {
+        question: "Qual é o planeta em que vivemos?",
+        options: ["Marte", "Júpiter", "Terra", "Vênus"],
+        answer: 2
+      },
+      {
+        question: "O que é usado para proteger a cabeça quando andamos de bicicleta?",
+        options: ["Boné", "Capacete", "Chapéu", "Touca"],
+        answer: 1
+      },
+      {
+        question: "Qual desses animais é um mamífero?",
+        options: ["Jacaré", "Galinha", "Golfinho", "Peixe"],
+        answer: 2
+      },
+      {
+        question: 'Quem escreveu "O Pequeno Príncipe"?',
+        options: ["Monteiro Lobato", "Antoine de Saint-Exupéry", "Ruth Rocha", "Ziraldo"],
+        answer: 1
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      document.getElementById("score").classList.add("hidden");
+      const q = questions[current];
+      document.getElementById("question").textContent = q.question;
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.onclick = () => checkAnswer(i);
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selected) {
+      const q = questions[current];
+      if (selected === q.answer) {
+        score++;
+        alert("✅ Resposta correta!");
+      } else {
+        alert("❌ Resposta errada. A resposta certa era: " + q.options[q.answer]);
+      }
+    }
+
+    function nextQuestion() {
+      current++;
+      if (current < questions.length) {
+        loadQuestion();
+      } else {
+        document.getElementById("quiz").innerHTML = `
+          <h2>Fim do jogo! 🏁</h2>
+          <p>Você acertou ${score} de ${questions.length} perguntas!</p>
+          <button onclick="location.reload()">Jogar Novamente</button>
+        `;
+      }
+    }
+
+    // Inicia o quiz
+    loadQuestion();
+  </script>
+</body>
+</html>
